@@ -1,4 +1,4 @@
-#include <iostream>
+include <iostream>
 #include <cstring>
 using namespace std;
 
@@ -14,8 +14,8 @@ struct bill
  
 void income()
 {
-	char date[100],type[100],note[100];
-	double money;
+	char date[100],type[100],note[100];		//¿¿¿¿¿¿¿¿¿¿¿
+	double money;//¿¿¿¿
 	cout<<"****»¶Ó­À´µ½ÊÕÈëµÄ¼ÇÂ¼****"<<endl;
 	cout<<"ÇëÊäÈëÊÕÈëÐÅÏ¢£º"<<endl;
 	cout<<"ÈÕÆÚ(xxxxÄêxxÔÂxxÈÕ)£º";
