@@ -1,76 +1,84 @@
 #include <iostream>
 #include <cstring>
+#include <map>
 using namespace std;
 
-struct bill
-{
-	char date[100];
-	double money;					//½ð¶îÊýÄ¿ 
-	char type[100];					//ÖÖÀà (À´Ô´)
-	char note[100];					//±¸×¢ 
-}collect1[1000],collect2[1000];
+struct billd {
+    char date[100];
+    double money;                  // ½ð¶îÊýÄ¿ 
+    char type[100];                // ÖÖÀà (À´Ô´)
+    char note[100];                // ±¸×¢ 
+} collect1[1000], collect2[1000];
 
- int count1=0,count2=0;						//¼ÇÂ¼¸öÊý 
- 
-void income()
-{
-	char date[100],type[100],note[100];		//¿¿¿¿¿¿¿¿¿¿¿
-	double money;//¿¿¿¿
-	cout<<"****»¶Ó­À´µ½ÊÕÈëµÄ¼ÇÂ¼****"<<endl;
-	cout<<"ÇëÊäÈëÊÕÈëÐÅÏ¢£º"<<endl;
-	cout<<"ÈÕÆÚ(xxxxÄêxxÔÂxxÈÕ)£º";
-	cin>>date;
-	strcpy(collect1[count1].date,date);
-	cout<<"½ð¶î£º";
-	cin>>money;
-	collect1[count1].money=money;
-	cout<<"ÖÖÀà(À´Ô´)£º";
-	cin>>type;
-	strcpy(collect1[count1].type,type);
-	cout<<"±¸×¢£º"; 
-	cin>>note;
-	strcpy(collect1[count1].note,note);
-	cout<<"ÊÕÈëÒÑ³É¹¦¼ÇÂ¼£¡"<<endl; 
-	count1++; 
-} 
+int count1 = 0, count2 = 0;      // ¼ÇÂ¼¸öÊý 
+double monthlyBudget = 0;        // Ã¿ÔÂÔ¤Ëã
+double totalExpend = 0;          // µ±Ç°ÒÑÖ§³ö×Ü¶î
 
-void expend()
-{
-	char date[30],type[50],note[50];
-	double money;
-	cout<<"****»¶Ó­À´µ½Ö§³öµÄ¼ÇÂ¼****"<<endl;
-	cout<<"ÇëÊäÈëÖ§³öÐÅÏ¢£º"<<endl;
-	cout<<"ÈÕÆÚ(xxxxÄêxxÔÂxxÈÕ)£º";
-	cin>>date;
-	strcpy(collect2[count2].date,date);
-	cout<<"½ð¶î£º";
-	cin>>money;
-	collect2[count2].money=money;
-	cout<<"ÖÖÀà(À´Ô´)£º";
-	cin>>type;
-	strcpy(collect2[count2].type,type);
-	cout<<"±¸×¢£º";
-	cin>>note;
-	strcpy(collect2[count2].note,note);
-	cout<<"Ö§³öÒÑ³É¹¦¼ÇÂ¼£¡"<<endl; 
-	count2++; 
+void income() {
+    char date[100], type[100], note[100];
+    double money;
+    cout << "****»¶Ó­À´µ½ÊÕÈëµÄ¼ÇÂ¼****" << endl;
+    cout << "ÇëÊäÈëÊÕÈëÐÅÏ¢£º" << endl;
+    cout << "ÈÕÆÚ(xxxxÄêxxÔÂxxÈÕ)£º";
+    cin >> date;
+    strcpy(collect1[count1].date, date);
+    cout << "½ð¶î£º";
+    cin >> money;
+    collect1[count1].money = money;
+    cout << "ÖÖÀà(À´Ô´)£º";
+    cin >> type;
+    strcpy(collect1[count1].type, type);
+    cout << "±¸×¢£º"; 
+    cin >> note;
+    strcpy(collect1[count1].note, note);
+    cout << "ÊÕÈëÒÑ³É¹¦¼ÇÂ¼£¡" << endl; 
+    count1++; 
 }
 
+void expend() {
+    char date[30], type[50], note[50];
+    double money;
+    cout << "****»¶Ó­À´µ½Ö§³öµÄ¼ÇÂ¼****" << endl;
+    cout << "ÇëÊäÈëÖ§³öÐÅÏ¢£º" << endl;
+    cout << "ÈÕÆÚ(xxxxÄêxxÔÂxxÈÕ)£º";
+    cin >> date;
+    strcpy(collect2[count2].date, date);
+    cout << "½ð¶î£º";
+    cin >> money;
+    collect2[count2].money = money;
+    totalExpend += money;  // Ôö¼ÓÖ§³ö×Ü¶î
+    cout << "ÖÖÀà(À´Ô´)£º";
+    cin >> type;
+    strcpy(collect2[count2].type, type);
+    cout << "±¸×¢£º";
+    cin >> note;
+    strcpy(collect2[count2].note, note);
+    cout << "Ö§³öÒÑ³É¹¦¼ÇÂ¼£¡" << endl; 
+    count2++; 
+}
 
-void print_bill()
-{
+void set_budget() {
+    cout << "ÇëÊäÈëÄúµÄÔ¤Ëã½ð¶î£º";
+    cin >> monthlyBudget;
+    cout << "Ô¤ËãÒÑ³É¹¦ÉèÖÃ£¡µ±Ç°Ô¤ËãÎª£º" << monthlyBudget << endl;
+}
+
+void show_budget() {
+    double remainingBudget = monthlyBudget - totalExpend;
+    cout << "µ±Ç°Ê£ÓàÔ¤ËãÎª£º" << remainingBudget << endl;
+}
+
+void print_bill() {
     cout << "******ÕËµ¥Õ¹Ê¾******" << endl;
     cout << "****ÊÕÈëÕËµ¥****" << endl;
-    for(int i = 0; i < count1; i++)
-    {
+    for (int i = 0; i < count1; i++) {
         cout << "ÈÕÆÚ:" << collect1[i].date 
              << " ½ð¶î:" << collect1[i].money 
              << " ÖÖÀà:" << collect1[i].type 
              << " ±¸×¢:" << collect1[i].note << endl; 
-    } 
+    }
     cout << "****Ö§³öÕËµ¥****" << endl;
-    for(int j = 0; j < count2; j++)
-    {
+    for (int j = 0; j < count2; j++) {
         cout << "ÈÕÆÚ:" << collect2[j].date 
              << " ½ð¶î:" << collect2[j].money 
              << " ÖÖÀà:" << collect2[j].type 
@@ -83,8 +91,7 @@ void print_bill()
     cout << "Ñ¡Ôñ2:Ñ¡ÔñÀàÐÍ²éÑ¯" << endl;
     cin >> choice;
 
-    if(choice == 1)
-    {
+    if (choice == 1) {
         char queryDate[100];
         cout << "ÇëÊäÈëÈÕÆÚ½øÐÐ²éÑ¯£º";
         cin >> queryDate;
@@ -92,10 +99,8 @@ void print_bill()
         cout << "²éÑ¯½á¹û:" << endl;
         bool found = false;
 
-        for(int i = 0; i < count1; i++)
-        {
-            if(strcmp(collect1[i].date, queryDate) == 0)
-            {
+        for (int i = 0; i < count1; i++) {
+            if (strcmp(collect1[i].date, queryDate) == 0) {
                 cout << "ÈÕÆÚ:" << collect1[i].date 
                      << " ½ð¶î:" << collect1[i].money 
                      << " ÖÖÀà:" << collect1[i].type 
@@ -103,10 +108,8 @@ void print_bill()
                 found = true;
             }
         }
-        for(int j = 0; j < count2; j++)
-        {
-            if(strcmp(collect2[j].date, queryDate) == 0)
-            {
+        for (int j = 0; j < count2; j++) {
+            if (strcmp(collect2[j].date, queryDate) == 0) {
                 cout << "ÈÕÆÚ:" << collect2[j].date 
                      << " ½ð¶î:" << collect2[j].money 
                      << " ÖÖÀà:" << collect2[j].type 
@@ -118,19 +121,16 @@ void print_bill()
         if (!found) {
             cout << "Ã»ÓÐÕÒµ½Ïà¹Ø¼ÇÂ¼¡£" << endl;
         }
-    }
-    else if(choice == 2)
-    {
+    } 
+    else if (choice == 2) {
         char queryType[100];
         cout << "ÇëÊäÈëÀàÐÍ½øÐÐ²éÑ¯£º";
         cin >> queryType;
 
         cout << "²éÑ¯½á¹û:" << endl;
         bool found = false;
-        for(int i = 0; i < count1; i++)
-        {
-            if(strcmp(collect1[i].type, queryType) == 0)
-            {
+        for (int i = 0; i < count1; i++) {
+            if (strcmp(collect1[i].type, queryType) == 0) {
                 cout << "ÈÕÆÚ:" << collect1[i].date 
                      << " ½ð¶î:" << collect1[i].money 
                      << " ÖÖÀà:" << collect1[i].type 
@@ -138,10 +138,8 @@ void print_bill()
                 found = true;
             }
         }
-        for(int j = 0; j < count2; j++)
-        {
-            if(strcmp(collect2[j].type, queryType) == 0)
-            {
+        for (int j = 0; j < count2; j++) {
+            if (strcmp(collect2[j].type, queryType) == 0) {
                 cout << "ÈÕÆÚ:" << collect2[j].date 
                      << " ½ð¶î:" << collect2[j].money 
                      << " ÖÖÀà:" << collect2[j].type 
@@ -153,49 +151,110 @@ void print_bill()
         if (!found) {
             cout << "Ã»ÓÐÕÒµ½Ïà¹Ø¼ÇÂ¼¡£" << endl;
         }
-    }
-    else
-    {
+    } 
+    else {
         cout << "ÎÞÐ§Ñ¡Ôñ£¬ÇëÖØÊÔ¡£" << endl;
     }
 }
 
-void menu()
-{
-	cout<<"**********»¶Ó­Ê¹ÓÃ¸öÈËÕËµ¥¹ÜÀíÏµÍ³**********"<<endl;
-	cout<<"ÇëÑ¡Ôñ²Ù×÷"<<endl;
-	cout<<"1.ÊÕÈë¼ÇÂ¼"<<endl;
-	cout<<"2.Ö§³ö¼ÇÂ¼"<<endl; 
-	cout<<"3.ÕËµ¥Õ¹Ê¾ÒÔ¼°ÕËµ¥²éÑ¯"<<endl;
+void monthly_statistics() {
+    char month[7];  // ÓÃÓÚÊäÈëÔÂ·Ý£¬Èç "2024Äê04ÔÂ"
+    double totalIncome = 0, totalExpend = 0;
+    map<string, double> incomeByCategory, expendByCategory;  // ·ÖÀà±ðÍ³¼ÆÊÕÈëºÍÖ§³ö
+
+    cout << "ÇëÊäÈëÐèÒªÍ³¼ÆµÄÔÂ·Ý£¨¸ñÊ½£ºxxxxÄêxxÔÂ£©£º";
+    cin >> month;
+
+    // Í³¼ÆÊÕÈë
+    for (int i = 0; i < count1; i++) {
+        if (strncmp(collect1[i].date, month, 7) == 0) {  // ±È½ÏÄê·ÝºÍÔÂ·Ý
+            totalIncome += collect1[i].money;
+            incomeByCategory[collect1[i].type] += collect1[i].money;
+        }
+    }
+
+    // Í³¼ÆÖ§³ö
+    for (int j = 0; j < count2; j++) {
+        if (strncmp(collect2[j].date, month, 7) == 0) {  // ±È½ÏÄê·ÝºÍÔÂ·Ý
+            totalExpend += collect2[j].money;
+            expendByCategory[collect2[j].type] += collect2[j].money;
+        }
+    }
+
+    cout << "ÔÂ¶ÈÍ³¼Æ½á¹û (" << month << "):" << endl;
+    cout << "×ÜÊÕÈë: " << totalIncome << endl;
+    cout << "×ÜÖ§³ö: " << totalExpend << endl;
+   // Êä³öÊÕÈë°´Àà±ðÍ³¼Æ
+cout << "ÊÕÈë°´Àà±ðÍ³¼Æ: " << endl;
+for (map<string, double>::iterator it = incomeByCategory.begin(); it != incomeByCategory.end(); ++it) {
+    cout << it->first << ": " << it->second << endl;
 }
 
-int main()
-{
-	int choice,choice1;
+// Êä³öÖ§³ö°´Àà±ðÍ³¼Æ
+cout << "Ö§³ö°´Àà±ðÍ³¼Æ: " << endl;
+for (map<string, double>::iterator it = expendByCategory.begin(); it != expendByCategory.end(); ++it) {
+    cout << it->first << ": " << it->second << endl;
+}
+
+}
+
+void menu() {
+    cout << "**********»¶Ó­Ê¹ÓÃ¸öÈËÕËµ¥¹ÜÀíÏµÍ³**********" << endl;
+    cout << "ÇëÑ¡Ôñ²Ù×÷" << endl;
+    cout << "1.ÊÕÈë¼ÇÂ¼" << endl;
+    cout << "2.Ö§³ö¼ÇÂ¼" << endl;
+    cout << "3.ÕËµ¥Õ¹Ê¾ÒÔ¼°ÕËµ¥²éÑ¯" << endl;
+    cout << "4.ÉèÖÃÔ¤Ëã" << endl;
+    cout << "5.²é¿´Ê£ÓàÔ¤Ëã" << endl;
+    cout << "6.ÔÂ¶ÈÍ³¼Æ" << endl;
+}
+
+int main() {
+    int choice, choice1;
 Start:
-	menu();
-	cout<<"ÇëÊäÈëÄãÒªÊ¹ÓÃÓÃµÄ¹¦ÄÜ£º";
-	cin>>choice;
-	switch(choice) 
-	{
-		case 1:
-				income();
-				cout<<"Çë°´1·µ»ØÖ÷²Ëµ¥"<<endl;
-				cin>>choice1;
-				if(choice1==1)
-				goto Start;
-		case 2:
-				expend();
-				cout<<"Çë°´1·µ»ØÖ÷²Ëµ¥"<<endl;
-				cin>>choice1;
-				if(choice1==1)
-				goto Start;
-		case 3:
-				print_bill();
-				cout<<"Çë°´1·µ»ØÖ÷²Ëµ¥"<<endl;
-				cin>>choice1;
-				if(choice1==1)
-				goto Start;
-	}	
-	return 0;
+    menu();
+    cout << "ÇëÊäÈëÄãÒªÊ¹ÓÃµÄ¹¦ÄÜ£º";
+    cin >> choice;
+    switch (choice) {
+        case 1:
+            income();
+            cout << "Çë°´1·µ»ØÖ÷²Ëµ¥" << endl;
+            cin >> choice1;
+            if (choice1 == 1) goto Start;
+            break;
+        case 2:
+            expend();
+            cout << "Çë°´1·µ»ØÖ÷²Ëµ¥" << endl;
+            cin >> choice1;
+            if (choice1 == 1) goto Start;
+            break;
+        case 3:
+            print_bill();
+            cout << "Çë°´1·µ»ØÖ÷²Ëµ¥" << endl;
+            cin >> choice1;
+            if (choice1 == 1) goto Start;
+            break;
+        case 4:
+            set_budget();
+            cout << "Çë°´1·µ»ØÖ÷²Ëµ¥" << endl;
+            cin >> choice1;
+            if (choice1 == 1) goto Start;
+            break;
+        case 5:
+            show_budget();
+            cout << "Çë°´1·µ»ØÖ÷²Ëµ¥" << endl;
+            cin >> choice1;
+            if (choice1 == 1) goto Start;
+            break;
+        default:
+            cout << "ÎÞÐ§Ñ¡Ôñ£¬ÇëÖØÊÔ¡£" << endl;
+            break;
+        case 6:
+			monthly_statistics();
+			cout << "Çë°´1·µ»ØÖ÷²Ëµ¥" << endl;
+            cin >> choice1;
+            if (choice1 == 1) goto Start;
+            break;
+    }
+    return 0;
 }
